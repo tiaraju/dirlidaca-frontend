@@ -23,4 +23,4 @@ export function configure(aurelia: Aurelia) {
   }
 
   aurelia.start().then(() => aurelia.setRoot());
-}
+  }

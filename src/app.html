@@ -1,3 +1,43 @@
 <template>
-  <h1>${message}</h1>
+  <require from="bootstrap/css/bootstrap.css"></require>
+  <require from="./resources/css/style.css"></require>
+
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        <i class="fa fa-user"></i>
+        <span>DirliDaca</span>
+      </a>
+      <a class="navbar-brand" href="#">
+        <i class="fa fa-user"></i>
+        <span>Welcome</span>
+      </a>
+      <a class="navbar-brand" href="#">
+        <i class="fa fa-user"></i>
+        <span>Problems</span>
+      </a>
+      <a class="navbar-brand" href="#">
+        <i class="fa fa-user"></i>
+        <span>Course</span>
+      </a>
+      <a class="navbar-brand" href="#">
+        <i class="fa fa-user"></i>
+        <span>Edit Problem</span>
+      </a>
+      <a class="navbar-brand" href="#">
+        <i class="fa fa-user"></i>
+        <span>IDE</span>
+      </a>
+
+      <a class="navbar-brand" style="text-align:right" href="#/login">
+        <i class="fa fa-user"></i>
+        <span>Login</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="container">
+      <router-view class="col-md-8"></router-view>
+  </div>
 </template>
