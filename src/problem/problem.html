@@ -1,0 +1,21 @@
+<template>
+    <h1>Registered Problems</h1>
+
+    <div class="problem-list">
+        <ul class="list-group">
+
+            <li repeat.for="problem of problems" class="list-group-item">
+                <a route-href="route: problem-detail; params.bind:{id:problem.id}">
+                    <md class="list-group-item-heading">${problem.name}</md>
+                    <md class="list-group-item-heading">${problem.description}</md>
+                </a>
+            </li>
+
+        </ul>
+
+        <a route-href="route: add-problem">
+            <button class="btn btn-success">Add Problem</button>
+        </a>
+    </div>
+
+</template>
