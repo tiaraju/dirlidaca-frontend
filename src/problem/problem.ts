@@ -14,11 +14,9 @@ export class Problem {
 
     created() {
         this.problems = [];
-        //TODO make this work
         this.api.getProblems().then(response =>response.json())
             .then(data => {
-                console.log("DADOS: "+data);
-                this.problems = [data];
+                this.problems = data;
             });
     }
 }

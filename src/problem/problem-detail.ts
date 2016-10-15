@@ -7,15 +7,29 @@ import {Api} from '../api/api';
 @inject(Api)
 export class ProblemDetail {
 
-    name:string;
-    description:string;
     routeConfig;
+    problem;
 
     constructor(private api:Api) {
-        console.log("chegou");
+    }
+
+    get canUpdate() {
+        return this.problem && this.problem.name && this.problem.description;
     }
 
     activate(params, routeConfig) {
         this.routeConfig = routeConfig;
+        this.api.getProblem(params.id).then(response =>response.json())
+            .then(data => {
+                this.problem = data;
+            });
+    }
+
+    updateProblem() {
+        this.api.updateProblem(this.problem).then(response =>response.json())
+            .then(data => {
+                this.problem = data;
+                alert("Problem Updated");
+            });
     }
 }

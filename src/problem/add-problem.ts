@@ -1,25 +1,37 @@
 /**
  * Created by tiaraju on 12/10/16.
  */
+import {Api} from '../api/api';
+import {inject} from 'aurelia-framework';
 
-export class AddProblem{
+@inject(Api)
+export class AddProblem {
 
     name:string;
     description:string;
     hint:string;
 
-    constructor(){
+    constructor(private api:Api) {
     }
 
-    created(){
+    created() {
     }
 
-    get canAdd(){
+    get canSave() {
         return this.name && this.description;
     }
 
-    addProblem(){
-        console.log("Adding new Problem");
-        //TODO http call and return to problem list
+    addProblem() {
+        let newProblem = {
+            name: this.name,
+            description: this.description,
+            hint: this.hint
+        };
+        this.api.saveProblem(newProblem).then(()=> {
+            alert("Problem added");
+            this.name = "";
+            this.description = "";
+            this.hint = "";
+        });
     }
 }
