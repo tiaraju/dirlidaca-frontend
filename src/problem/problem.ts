@@ -5,13 +5,20 @@ import {inject} from 'aurelia-framework';
 import {Api} from '../api/api';
 
 @inject(Api)
-export class Problem{
+export class Problem {
 
     problems;
 
-    constructor(private api: Api){  }
+    constructor(private api:Api) {
+    }
 
     created() {
-        this.api.getProblems().then(problems=>this.problems=problems);
+        this.problems = [];
+        //TODO make this work
+        this.api.getProblems().then(response =>response.json())
+            .then(data => {
+                console.log("DADOS: "+data);
+                this.problems = [data];
+            });
     }
 }

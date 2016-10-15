@@ -50,31 +50,29 @@ define('main',["require", "exports", './environment'], function (require, export
     exports.configure = configure;
 });
 
-define('api/api',["require", "exports"], function (require, exports) {
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('api/api',["require", "exports", 'aurelia-framework', 'aurelia-fetch-client'], function (require, exports, aurelia_framework_1, aurelia_fetch_client_1) {
     "use strict";
-    var problems = [{ "id": 1, "name": "p1", "description": "problema 1" },
-        { "id": 2, "name": "p2", "description": "problema 2" },
-        { "id": 3, "name": "p3", "description": "problema 3" },
-    ];
     var Api = (function () {
-        function Api() {
-            this.latency = 200;
+        function Api(http) {
+            this.problems = [];
+            this.http = http;
         }
         Api.prototype.getProblems = function () {
-            var _this = this;
-            return new Promise(function (resolve) {
-                setTimeout(function () {
-                    var results = problems.map(function (x) {
-                        return {
-                            name: x.name,
-                            description: x.description,
-                            id: x.id
-                        };
-                    });
-                    resolve(results);
-                }, _this.latency);
-            });
+            return this.http.fetch("http://localhost:8080/problem");
         };
+        Api = __decorate([
+            aurelia_framework_1.inject(aurelia_fetch_client_1.HttpClient, aurelia_fetch_client_1.json), 
+            __metadata('design:paramtypes', [aurelia_fetch_client_1.HttpClient])
+        ], Api);
         return Api;
     }());
     exports.Api = Api;
@@ -127,6 +125,9 @@ define('problem/add-problem',["require", "exports"], function (require, exports)
             enumerable: true,
             configurable: true
         });
+        AddProblem.prototype.addProblem = function () {
+            console.log("Adding new Problem");
+        };
         return AddProblem;
     }());
     exports.AddProblem = AddProblem;
@@ -177,7 +178,12 @@ define('problem/problem',["require", "exports", 'aurelia-framework', '../api/api
         }
         Problem.prototype.created = function () {
             var _this = this;
-            this.api.getProblems().then(function (problems) { return _this.problems = problems; });
+            this.problems = [];
+            this.api.getProblems().then(function (response) { return response.json(); })
+                .then(function (data) {
+                console.log("DADOS: " + data);
+                _this.problems = [data];
+            });
         };
         Problem = __decorate([
             aurelia_framework_1.inject(api_1.Api), 

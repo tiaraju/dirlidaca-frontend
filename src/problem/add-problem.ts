@@ -9,14 +9,17 @@ export class AddProblem{
     hint:string;
 
     constructor(){
-
     }
 
     created(){
-
     }
 
     get canAdd(){
         return this.name && this.description;
+    }
+
+    addProblem(){
+        console.log("Adding new Problem");
+        //TODO http call and return to problem list
     }
 }
